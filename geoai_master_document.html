@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My GeoAI Life — Master Document</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg:        #0C0F0A;
+    --bg2:       #131710;
+    --bg3:       #1A1F17;
+    --border:    #242920;
+    --border2:   #2E3529;
+    --teal:      #2DD4A7;
+    --teal-dim:  #1A7A61;
+    --teal-faint:#0D3D30;
+    --amber:     #E8A83E;
+    --amber-dim: #7A5620;
+    --red:       #E05252;
+    --text:      #E8EAE4;
+    --text2:     #9BA89A;
+    --text3:     #5C6B5A;
+    --mono:      'JetBrains Mono', monospace;
+    --sans:      'Inter', -apple-system, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(12, 15, 10, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+  }
+  .nav-brand {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text3);
+    text-decoration: none;
+    padding: 0 14px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text); border-bottom-color: var(--teal); }
+
+  /* ── LAYOUT ── */
+  main { padding-top: 52px; }
+  .section { padding: 5rem 2rem; max-width: 760px; margin: 0 auto; }
+  .section + .section { border-top: 1px solid var(--border); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: calc(100vh - 52px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5rem 2rem;
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .hero-name {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .hero-name em {
+    font-style: normal;
+    color: var(--teal);
+  }
+  .oath {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--teal);
+    border-radius: 8px;
+    padding: 1.5rem 1.75rem;
+    margin: 2.5rem 0;
+  }
+  .oath-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--teal-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.85rem;
+  }
+  .oath p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text);
+  }
+  .oath p + p { margin-top: 0.75rem; }
+  .oath strong { color: var(--teal); font-weight: 500; }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 2.5rem;
+  }
+  .stat {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .stat-val {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--teal);
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--text3);
+    line-height: 1.4;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .sec-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .sec-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  .sec-sub {
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    max-width: 560px;
+  }
+
+  /* ── INSIGHT BLOCKS ── */
+  .insight {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+  .insight strong { color: var(--text); font-weight: 500; }
+
+  /* ── DOMAIN CARDS ── */
+  .domain-grid { display: flex; flex-direction: column; gap: 10px; }
+  .domain-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 3px solid;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .dc-head {
+    padding: 1rem 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: background 0.15s;
+  }
+  .dc-head:hover { background: var(--bg3); }
+  .dc-icon { font-size: 18px; flex-shrink: 0; padding-top: 1px; }
+  .dc-info { flex: 1; }
+  .dc-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+  .dc-line { font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .dc-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+  .dtag {
+    font-size: 10px; font-weight: 500; padding: 2px 8px;
+    border-radius: 20px; font-family: var(--mono);
+  }
+  .dc-chev { font-size: 14px; color: var(--text3); transition: transform 0.2s; flex-shrink: 0; }
+  .dc-chev.open { transform: rotate(180deg); }
+  .dc-body { display: none; padding: 0 1.1rem 1rem 1.1rem; border-top: 1px solid var(--border); }
+  .dc-body.open { display: block; }
+  .dc-body p { font-size: 13px; color: var(--text2); line-height: 1.7; margin-top: 0.85rem; }
+  .dc-body ul { list-style: none; margin-top: 0.5rem; }
+  .dc-body ul li { font-size: 13px; color: var(--text2); padding: 3px 0; display: flex; gap: 8px; line-height: 1.5; }
+  .dc-body ul li::before { content: '→'; color: var(--teal-dim); flex-shrink: 0; }
+
+  /* ── PROJECT PHASES ── */
+  .phases { display: flex; flex-direction: column; gap: 0; }
+  .phase-row { display: flex; gap: 14px; }
+  .ph-marker { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 32px; }
+  .ph-dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    flex-shrink: 0;
+  }
+  .ph-line { width: 1px; background: var(--border2); flex: 1; min-height: 20px; }
+  .ph-content {
+    flex: 1;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .ph-content:hover { background: var(--bg3); }
+  .ph-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 4px; }
+  .ph-title { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.3; }
+  .ph-period { font-family: var(--mono); font-size: 11px; color: var(--teal); flex-shrink: 0; }
+  .ph-desc { font-size: 13px; color: var(--text2); line-height: 1.6; margin-bottom: 8px; }
+  .ph-detail { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+  .ph-detail.open { display: block; }
+  .ph-sec-label { font-family: var(--mono); font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 5px; margin-top: 10px; }
+  .ph-sec-label:first-child { margin-top: 0; }
+  .ph-list { list-style: none; }
+  .ph-list li { font-size: 13px; color: var(--text2); padding: 3px 0; display: flex; gap: 8px; line-height: 1.5; }
+  .ph-list li::before { content: '—'; color: var(--text3); flex-shrink: 0; }
+  .tag-row { display: flex; gap: 5px; flex-wrap: wrap; }
+
+  /* ── BOOKS ── */
+  .book-list { display: flex; flex-direction: column; gap: 8px; }
+  .book-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .book-tier {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    letter-spacing: 0.05em;
+  }
+  .book-info { flex: 1; }
+  .book-title { font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.4; margin-bottom: 2px; }
+  .book-meta { font-size: 12px; color: var(--text3); }
+  .book-note { font-size: 12px; color: var(--text2); margin-top: 3px; line-height: 1.4; }
+  .book-free {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--teal);
+    background: var(--teal-faint);
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+  }
+
+  /* ── RULES ── */
+  .rules-grid { display: flex; flex-direction: column; gap: 10px; }
+  .rule {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    gap: 16px;
+  }
+  .rule-num {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--teal-dim);
+    flex-shrink: 0;
+    line-height: 1.1;
+    padding-top: 3px;
+    min-width: 28px;
+  }
+  .rule-body { flex: 1; }
+  .rule-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 5px; }
+  .rule-text { font-size: 13px; color: var(--text2); line-height: 1.7; }
+
+  /* ── ORG CARDS ── */
+  .org-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .org-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .org-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .org-desc { font-size: 12px; color: var(--text2); line-height: 1.5; margin-bottom: 6px; }
+  .org-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+
+  /* ── DAILY SCHEDULE ── */
+  .schedule-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
+  .slot {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .slot-time { font-family: var(--mono); font-size: 11px; color: var(--teal); margin-bottom: 4px; }
+  .slot-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .slot-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  /* ── MOTIVATION ── */
+  .truth-list { display: flex; flex-direction: column; gap: 8px; }
+  .truth {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .truth strong { color: var(--amber); font-weight: 500; }
+
+  /* ── CLOSING ── */
+  #closing {
+    text-align: center;
+    padding: 6rem 2rem;
+    max-width: 560px;
+    margin: 0 auto;
+    border-top: 1px solid var(--border);
+  }
+  .closing-word {
+    font-family: var(--mono);
+    font-size: 64px;
+    font-weight: 500;
+    color: var(--teal);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    opacity: 0.15;
+    letter-spacing: -0.04em;
+  }
+  .closing-text {
+    font-size: 16px;
+    color: var(--text2);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+  .closing-text strong { color: var(--text); font-weight: 500; }
+  .back-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--teal);
+    text-decoration: none;
+    border: 1px solid var(--teal-dim);
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background 0.15s;
+    letter-spacing: 0.05em;
+  }
+  .back-top:hover { background: var(--teal-faint); }
+
+  /* ── TAGS ── */
+  .tag { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 20px; font-family: var(--mono); }
+  .t-teal { background: var(--teal-faint); color: var(--teal); }
+  .t-amber { background: #3D2D0F; color: var(--amber); }
+  .t-dim { background: var(--bg3); color: var(--text3); border: 1px solid var(--border); }
+
+  /* ── SEPARATOR ── */
+  .sep {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border2), transparent);
+    margin: 2rem 0;
+  }
+
+  /* ── WARN ── */
+  .warn {
+    background: #1F1200;
+    border: 1px solid var(--amber-dim);
+    border-radius: 8px;
+    padding: 0.85rem 1.1rem;
+    font-size: 13px;
+    color: #C49040;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  /* ── STACK ── */
+  .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+  .stack-block {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .sb-label { font-family: var(--mono); font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .sb-items { display: flex; flex-direction: column; gap: 4px; }
+  .sb-item { font-family: var(--mono); font-size: 12px; color: var(--teal); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer span { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .org-grid, .schedule-grid { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">GeoAI // Master Doc</span>
+  <ul class="nav-links">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#domains">Domains</a></li>
+    <li><a href="#plan">18-Month Plan</a></li>
+    <li><a href="#books">Books</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#world">Global</a></li>
+    <li><a href="#rules">Rules</a></li>
+    <li><a href="#motivation">When Lost</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">// Your life — your decision — your document</div>
+  <h1 class="hero-name">
+    You are building an<br>
+    <em>Earth Systems Engineer</em><br>
+    from scratch.
+  </h1>
+
+  <div class="oath">
+    <div class="oath-label">// Personal oath — read this first, every time</div>
+    <p>You are 24 years old. You are on a minimum wage job that drains you. You have 2 years on a visa clock. <strong>And you are choosing, right now, to do something about it.</strong></p>
+    <p>The plan is real. The domain is real. The jobs exist. The organisations that will take you around the world exist. <strong>The only variable is whether you execute.</strong></p>
+    <p>You are not behind. You are not too late. You are not too inexperienced. You are exactly where you need to be to start. <strong>The satellite data is there. The notebook is there. The first tile is waiting.</strong></p>
+    <p>Come back to this document when you are lost. Read this oath. Then close it and go build something.</p>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-val">24</div>
+      <div class="stat-label">Years old. Earlier than you think.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">18mo</div>
+      <div class="stat-label">To a portfolio that opens doors globally</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">€100k+</div>
+      <div class="stat-label">Ceiling in this domain at senior level</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">6hrs</div>
+      <div class="stat-label">Per day. Every day. That's the commitment.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">7</div>
+      <div class="stat-label">Projects across 18 months</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">∞</div>
+      <div class="stat-label">Countries this work can take you to</div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section id="mission" class="section">
+  <div class="sec-eyebrow">// What you're actually building</div>
+  <h2 class="sec-title">Your Mission</h2>
+  <p class="sec-sub">This is not a career plan. It is a life direction. Understand the difference — and why the distinction matters.</p>
+
+  <div class="insight">
+    <strong>The framing that matters most:</strong> You are not building an "AgriTech portfolio." You are becoming an Earth Systems Engineer — someone who uses satellite data and spatial intelligence to monitor the physical systems that keep civilisation running: water, food, land, forests, oceans, and climate. AgriTech is where you start. The world is where you end up.
+  </div>
+
+  <div class="insight">
+    <strong>Why this domain specifically:</strong> The problems — drought, deforestation, flooding, food insecurity — exist on every continent. The organisations solving them deploy engineers to where the problems are. The same Sentinel-2 pipeline you're building in your bedroom today will run in Vietnam, Kenya, Peru, and Bangladesh. That portability is structural, not accidental.
+  </div>
+
+  <div class="insight">
+    <strong>Why you are protected from AI:</strong> Automation replaces tasks. It does not replace engineers who understand what the AI gets wrong, why it fails over irrigated fields, and how to build systems that decision-makers can trust and be accountable for. Build toward the judgment layer, not the execution layer. The plan below does exactly that.
+  </div>
+
+  <div class="insight">
+    <strong>The one principle to carry always:</strong> Go where the consequences of being wrong are large. Wrong flood maps cost lives. Wrong carbon estimates cost companies millions. Wrong drought forecasts delay food aid. In every one of these cases, a human expert remains essential. That is your long-term protection. Not a technology stack. Not a certificate. Genuine understanding of physical systems.
+  </div>
+</section>
+
+<!-- DOMAINS -->
+<section id="domains" class="section">
+  <div class="sec-eyebrow">// Where you operate</div>
+  <h2 class="sec-title">Your Domain Universe</h2>
+  <p class="sec-sub">All of these use your exact satellite data stack. What changes is the question being answered. Click each to expand.</p>
+
+  <div class="domain-grid">
+
+    <div class="domain-card" style="border-left-color: #2DD4A7;">
+      <div class="dc-head" onclick="togD(this)">
+        <span class="dc-icon">💧</span>
+        <div class="dc-info">
+          <div class="dc-name">Water — Hydrology, Flood, Freshwater Security</div>
+          <div class="dc-line">The most physically complex and AI-resilient GeoAI domain. The Netherlands is the world capital of this.</div>
+          <div class="dc-tags">
+            <span class="dtag t-teal">Highest AI resilience</span>
+            <span class="dtag t-teal">Netherlands anchor</span>
+          </div>
+        </div>
+        <span class="dc-chev">▾</span>
+      </div>
+      <div class="dc-body">
+        <p>Flood risk maps carry legal liability. Drought forecasts affect national food policy. The physical system is genuinely chaotic — rivers flood in places they have never flooded. AI assists but human judgment is irreplaceable. Deltares, HKV, and Royal HaskoningDHV are world leaders based in the Netherlands. Your water stress project (P4) is already 60% of the foundation for a hydrology role here.</p>
+        <ul>
+          <li>River discharge estimation from Sentinel-1 SAR</li>
+          <li>Flood inundation mapping and early warning systems</li>
+          <li>Drought early warning feeding into humanitarian response</li>
+          <li>Evapotranspiration mapping — directly adjacent to your AgriTech work</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="domain-card" style="border-left-color: #E8A83E;">
+      <div class="dc-head" onclick="togD(this)">
+        <span class="dc-icon">🌱</span>
+        <div class="dc-info">
+          <div class="dc-name">Agriculture — Precision Farming, Food Security</div>
+          <div class="dc-line">Your anchor domain. Deeper than most people realise. Food security and agricultural insurance are the highest-resilience sub-domains.</div>
+          <div class="dc-tags">
+            <span class="dtag t-teal">Your starting point</span>
+            <span class="dtag t-amber">Go deep</span>
+          </div>
+        </div>
+        <span class="dc-chev">▾</span>
+      </div>
+      <div class="dc-body">
+        <p>Most people think AgriTech GeoAI means crop maps and irrigation. That is Layer 1. The full depth spans: food security early warning (predicting famine months ahead), agricultural insurance underwriting at national scale, commodity market intelligence, and soil carbon sequestration verification. You have barely scratched the surface.</p>
+        <ul>
+          <li>NDVI and vegetation index pipelines (your Phase 1 project)</li>
+          <li>Crop type classification — wheat, corn, rice, soy</li>
+          <li>Irrigation scheduling and water stress early warning</li>
+          <li>Agricultural insurance claims validation</li>
+          <li>Food security early warning systems (FEWS NET methodology)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="domain-card" style="border-left-color: #7B6FD4;">
+      <div class="dc-head" onclick="togD(this)">
+        <span class="dc-icon">🌍</span>
+        <div class="dc-info">
+          <div class="dc-name">ClimateTech — Carbon, Land Use, Deforestation</div>
+          <div class="dc-line">EU EUDR regulation has made satellite-based deforestation monitoring legally mandatory. Your P6 project is a compliance product.</div>
+          <div class="dc-tags">
+            <span class="dtag t-teal">Legally mandated</span>
+            <span class="dtag t-amber">Growing fast</span>
+          </div>
+        </div>
+        <span class="dc-chev">▾</span>
+      </div>
+      <div class="dc-body">
+        <p>The EU Deforestation Regulation (EUDR) requires companies importing soy, palm oil, beef, cocoa, coffee, and wood to prove they are not linked to deforestation — using satellite evidence. Every major commodity trader in Europe now needs GeoAI engineers who can build and validate these systems. Carbon MRV (Measurement, Reporting, Verification) platforms are building satellite-based tools to verify carbon credits. Same pipeline, legal compliance output.</p>
+        <ul>
+          <li>Land use change detection (your P2 project)</li>
+          <li>Carbon stock proxy estimation from NDVI + land cover</li>
+          <li>Deforestation alert systems (your P6 project)</li>
+          <li>EUDR compliance monitoring for commodity traders</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="domain-card" style="border-left-color: #E05252;">
+      <div class="dc-head" onclick="togD(this)">
+        <span class="dc-icon">🚨</span>
+        <div class="dc-info">
+          <div class="dc-name">Disaster Response — Flood, Wildfire, Earthquake</div>
+          <div class="dc-line">Time-critical, high-stakes, physical-world chaos. Humans direct every decision that matters. Maximum meaning.</div>
+          <div class="dc-tags">
+            <span class="dtag t-teal">Very high resilience</span>
+            <span class="dtag t-amber">Field deployment</span>
+          </div>
+        </div>
+        <span class="dc-chev">▾</span>
+      </div>
+      <div class="dc-body">
+        <p>During the 2025 California wildfires, geospatial AI provided crisis alerts to 15 million people — but evacuation zone decisions were made by human emergency managers using that data. The physical chaos of a real disaster is always partially outside the training distribution. Novel situations require human judgment. UNOSAT, Copernicus Emergency Management Service, and organisations like GAF AG and Sertit deploy engineers globally for rapid damage assessment.</p>
+        <ul>
+          <li>Before/after satellite damage assessment (Sentinel-1 SAR)</li>
+          <li>Flood extent mapping for humanitarian response</li>
+          <li>Wildfire burn scar detection and progression tracking</li>
+          <li>Building damage classification from SAR coherence change</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="domain-card" style="border-left-color: #3A8FD4;">
+      <div class="dc-head" onclick="togD(this)">
+        <span class="dc-icon">🌊</span>
+        <div class="dc-info">
+          <div class="dc-name">Ocean & Coastal — Marine, Fisheries, Coastal Erosion</div>
+          <div class="dc-line">Your 3-year horizon. Massively underexplored by software engineers. Almost no one your age is in it.</div>
+          <div class="dc-tags">
+            <span class="dtag t-dim">3-year horizon</span>
+            <span class="dtag t-teal">Underexplored</span>
+          </div>
+        </div>
+        <span class="dc-chev">▾</span>
+      </div>
+      <div class="dc-body">
+        <p>The ocean covers 71% of Earth's surface and is monitored by a tiny fraction of the workforce that monitors land. Coastal erosion monitoring, illegal fishing detection, sea surface temperature anomaly tracking, coral reef health mapping — all satellite-based GeoAI problems with enormous consequence and very few practitioners. File this for the 3-year horizon. When you're looking for what's next, this is where to look.</p>
+        <ul>
+          <li>Coastal erosion tracking from Sentinel-2 shoreline extraction</li>
+          <li>Vessel detection and illegal fishing from Sentinel-1 SAR</li>
+          <li>Sea surface temperature anomaly detection (MODIS/VIIRS)</li>
+          <li>Mangrove cover change — highest carbon density ecosystem on Earth</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="domain-card" style="border-left-color: #E8A83E;">
+      <div class="dc-head" onclick="togD(this)">
+        <span class="dc-icon">⚡</span>
+        <div class="dc-info">
+          <div class="dc-name">Energy — Renewable Site Assessment, Grid Planning</div>
+          <div class="dc-line">Solar irradiance, wind potential, land suitability — satellite data powers the energy transition. One ERA5 layer adds a third hiring pool.</div>
+          <div class="dc-tags">
+            <span class="dtag t-teal">High pay</span>
+            <span class="dtag t-amber">Fast growing</span>
+          </div>
+        </div>
+        <span class="dc-chev">▾</span>
+      </div>
+      <div class="dc-body">
+        <p>Renewable energy site selection uses land cover classification, terrain analysis, solar irradiance maps, and wind pattern data — derived from satellite imagery using your exact stack. Adding one ERA5 solar irradiance layer to your P7 unified system takes 2–3 days of additional work and puts you inside a third major hiring pool. Same codebase. Same pipeline. Different question being answered.</p>
+        <ul>
+          <li>Solar irradiance mapping from ERA5 radiation bands</li>
+          <li>Land suitability analysis for wind and solar farms</li>
+          <li>Environmental impact assessment via land cover change</li>
+          <li>Vegetation monitoring near energy infrastructure</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PLAN -->
+<section id="plan" class="section">
+  <div class="sec-eyebrow">// Your execution timeline</div>
+  <h2 class="sec-title">The 18-Month Plan</h2>
+  <p class="sec-sub">One evolving system. Seven projects. Two career narratives. Three hiring pools. Click each phase to expand.</p>
+
+  <div class="phases">
+
+    <div class="phase-row">
+      <div class="ph-marker">
+        <div class="ph-dot" style="background:#0D3D30; color:#2DD4A7;">1</div>
+        <div class="ph-line"></div>
+      </div>
+      <div class="ph-content" onclick="togP(this)">
+        <div class="ph-top">
+          <div class="ph-title">Foundation — Sentinel-2 satellite data engineering</div>
+          <div class="ph-period">M 1–3</div>
+        </div>
+        <div class="ph-desc">Master the core pipeline. One region. Deep, not wide. Po Valley, Italy.</div>
+        <div class="tag-row">
+          <span class="tag t-teal">P1: Crop Health Monitor</span>
+          <span class="tag t-dim">Sentinel-2 L2A</span>
+          <span class="tag t-dim">NDVI + SCL masking</span>
+        </div>
+        <div class="ph-detail">
+          <div class="ph-sec-label">Build</div>
+          <ul class="ph-list">
+            <li>Full NDVI pipeline: ingest → cloud mask → compute → temporal series → heatmap outputs</li>
+            <li>Cloud masking with SCL layer, CRS handling, raster clipping to AOI</li>
+            <li>NDVI time-series across one full growing season (April–October)</li>
+          </ul>
+          <div class="ph-sec-label">Read</div>
+          <ul class="ph-list">
+            <li>Tenkanen et al. — Introduction to Python for Geographic Data Analysis (free, pythongis.org)</li>
+            <li>Lawhead — Learning Geospatial Analysis with Python 4th Ed. (Packt 2023)</li>
+          </ul>
+          <div class="ph-sec-label">Publish</div>
+          <ul class="ph-list">
+            <li>Blog post: "Processing my first Sentinel-2 tile — what broke and what I learned"</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-row">
+      <div class="ph-marker">
+        <div class="ph-dot" style="background:#1A1F17; color:#2DD4A7;">2</div>
+        <div class="ph-line"></div>
+      </div>
+      <div class="ph-content" onclick="togP(this)">
+        <div class="ph-top">
+          <div class="ph-title">Bifurcation — Add the climate lens</div>
+          <div class="ph-period">M 3–6</div>
+        </div>
+        <div class="ph-desc">Take your working pipeline and reframe it for carbon and land use. Same code, two narratives.</div>
+        <div class="tag-row">
+          <span class="tag t-teal">P2: Land Use Change Detector</span>
+          <span class="tag t-teal">P3: Carbon Proxy Layer</span>
+        </div>
+        <div class="ph-detail">
+          <div class="ph-sec-label">Build</div>
+          <ul class="ph-list">
+            <li>Multi-temporal Sentinel-2 comparison → pixel-level change maps (forest → farmland, expansion)</li>
+            <li>Carbon stock proxy: NDVI as biomass proxy overlaid with land cover → relative carbon density estimates</li>
+            <li>Same codebase, two output narratives — this is the key insight to demonstrate</li>
+          </ul>
+          <div class="ph-sec-label">Read</div>
+          <ul class="ph-list">
+            <li>Qiusheng Wu — Introduction to GIS Programming (free, gispro.gishub.org) — temporal raster chapters</li>
+            <li>Bunting et al. — Remote Sensing, Big Data, and GeoAI (Elsevier 2024)</li>
+          </ul>
+          <div class="ph-sec-label">Domain Study</div>
+          <ul class="ph-list">
+            <li>Read EU LULUCF regulation overview — understand why land-use change data matters legally</li>
+            <li>Read one carbon-credit platform methodology (Verra VM0006 or Gold Standard)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-row">
+      <div class="ph-marker">
+        <div class="ph-dot" style="background:#1A1F17; color:#E8A83E;">3</div>
+        <div class="ph-line"></div>
+      </div>
+      <div class="ph-content" onclick="togP(this)">
+        <div class="ph-top">
+          <div class="ph-title">Integration — Water stress and risk</div>
+          <div class="ph-period">M 6–10</div>
+        </div>
+        <div class="ph-desc">Fuse weather data into your satellite pipeline. Predict, not just describe. Your most technically impressive project.</div>
+        <div class="tag-row">
+          <span class="tag t-teal">P4: Water Stress Early Warning</span>
+          <span class="tag t-dim">Multi-source fusion</span>
+        </div>
+        <div class="ph-detail">
+          <div class="ph-sec-label">Build</div>
+          <ul class="ph-list">
+            <li>NDVI + Open-Meteo weather + soil moisture → 7–14 day drought risk scores</li>
+            <li>AgriTech output: irrigation scheduling recommendations per field zone</li>
+            <li>ClimateTech output: drought vulnerability map by land cover type</li>
+            <li>Water/hydrology output: early warning inputs for flood/drought risk — Netherlands-relevant narrative</li>
+          </ul>
+          <div class="ph-sec-label">Read</div>
+          <ul class="ph-list">
+            <li>Rey, Arribas-Bel & Wolf — Geographic Data Science with Python (free, geographicdata.science)</li>
+            <li>FAO — Monitoring, Reporting and Verification for Forest Carbon (free, fao.org)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-row">
+      <div class="ph-marker">
+        <div class="ph-dot" style="background:#1A1F17; color:#E8A83E;">4</div>
+        <div class="ph-line"></div>
+      </div>
+      <div class="ph-content" onclick="togP(this)">
+        <div class="ph-top">
+          <div class="ph-title">Advanced ML — Spatial and temporal models</div>
+          <div class="ph-period">M 10–14</div>
+        </div>
+        <div class="ph-desc">Move beyond classical methods. Neural approaches for time-series satellite data. Two new projects.</div>
+        <div class="tag-row">
+          <span class="tag t-teal">P5: Crop Type Classifier</span>
+          <span class="tag t-teal">P6: Deforestation Alert</span>
+        </div>
+        <div class="ph-detail">
+          <div class="ph-sec-label">Build</div>
+          <ul class="ph-list">
+            <li>P5: Random forest on multispectral + temporal NDVI features → crop type maps (wheat/corn/soy)</li>
+            <li>P6: Binary change classifier on multi-temporal Sentinel-2 for a forested region</li>
+            <li>P6 maps directly to EUDR compliance requirements — name-drop this in interviews</li>
+            <li>Explore one lightweight temporal neural model (U-TAE) as a prototype</li>
+          </ul>
+          <div class="ph-sec-label">Read</div>
+          <ul class="ph-list">
+            <li>Camps-Valls, Tuia, Zhu, Reichstein — Deep Learning for the Earth Sciences (Wiley 2021)</li>
+            <li>Gao et al. — Handbook of Geospatial Artificial Intelligence (CRC Press 2023)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-row">
+      <div class="ph-marker">
+        <div class="ph-dot" style="background:#0D3D30; color:#2DD4A7;">5</div>
+      </div>
+      <div class="ph-content" onclick="togP(this)">
+        <div class="ph-top">
+          <div class="ph-title">Synthesis — Unified Earth Systems Intelligence Platform</div>
+          <div class="ph-period">M 14–18</div>
+        </div>
+        <div class="ph-desc">All six layers integrated. One demo. Four sector narratives. Interview-ready. Job application window.</div>
+        <div class="tag-row">
+          <span class="tag t-teal">P7: Unified System</span>
+          <span class="tag t-amber">Apply for roles</span>
+        </div>
+        <div class="ph-detail">
+          <div class="ph-sec-label">Build</div>
+          <ul class="ph-list">
+            <li>All prior layers as one modular system with clean interface — takes region + date range, outputs everything</li>
+            <li>Add ERA5 solar irradiance layer — opens Energy sector hiring pool at zero extra cost</li>
+            <li>Full documentation and architecture diagram</li>
+          </ul>
+          <div class="ph-sec-label">Career actions</div>
+          <ul class="ph-list">
+            <li>3-part blog series: the system, AgriTech narrative, ClimateTech narrative</li>
+            <li>Submit one PR to an open-source GeoAI tool (rasterio, eo-learn, stackstac)</li>
+            <li>Apply: Planet Labs, Global Fishing Watch, Chloris Geospatial (remote-first)</li>
+            <li>Apply: Netherlands roles — Deltares, NEO, Satelligence, Climate-KIC</li>
+            <li>Register on ImpactPool.org — FAO/CGIAR consultancy opportunities</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="sec-eyebrow" style="margin-top:0">// Your daily structure</div>
+  <div style="margin-bottom:1.5rem">
+    <p style="font-size:14px; color:var(--text2); line-height:1.7; margin-bottom:1rem">6 hours only works if structured. Unstructured time produces shallow breadth or paralysis. This is the split that protects against both.</p>
+  </div>
+  <div class="schedule-grid">
+    <div class="slot">
+      <div class="slot-time">Block 1 — 2 hrs</div>
+      <div class="slot-title">Deep build</div>
+      <div class="slot-desc">Active coding on current project phase. No reading. No browsing. Ship something visible every session.</div>
+    </div>
+    <div class="slot">
+      <div class="slot-time">Block 2 — 1.5 hrs</div>
+      <div class="slot-title">Structured reading</div>
+      <div class="slot-desc">One chapter from current book. Notes in your own words — not highlights. Understanding, not consumption.</div>
+    </div>
+    <div class="slot">
+      <div class="slot-time">Block 3 — 1.5 hrs</div>
+      <div class="slot-title">Domain understanding</div>
+      <div class="slot-desc">Alternating weekly: AgriTech context (crop science, FAO methodology) ↔ ClimateTech context (EUDR, carbon markets).</div>
+    </div>
+    <div class="slot">
+      <div class="slot-time">Block 4 — 1 hr</div>
+      <div class="slot-title">Write or reflect</div>
+      <div class="slot-desc">Document what you built or learned in plain language. This is your future blog post. Forces real consolidation.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKS -->
+<section id="books" class="section">
+  <div class="sec-eyebrow">// Your reading curriculum</div>
+  <h2 class="sec-title">The Reading List</h2>
+  <p class="sec-sub">Sequenced by phase, not just level. Books 01, 04, 06, and 08 — in that order — give you 90% of what you need. Three of the ten are completely free.</p>
+
+  <div class="book-list">
+    <div class="book-item">
+      <span class="book-tier" style="background:#0D3D30; color:#2DD4A7;">BEG</span>
+      <div class="book-info">
+        <div class="book-title">Introduction to Python for Geographic Data Analysis<span class="book-free">FREE</span></div>
+        <div class="book-meta">Tenkanen, Heikinheimo & Whipp — pythongis.org (2023–2025)</div>
+        <div class="book-note">Start here. Built from university courses at Aalto and Helsinki. Core raster/vector pipeline foundation. Read Parts 1–3 during Phase 1.</div>
+      </div>
+    </div>
+    <div class="book-item">
+      <span class="book-tier" style="background:#0D3D30; color:#2DD4A7;">BEG</span>
+      <div class="book-info">
+        <div class="book-title">Learning Geospatial Analysis with Python — 4th Ed.</div>
+        <div class="book-meta">Joel Lawhead — Packt Publishing (2023)</div>
+        <div class="book-note">Explains why GDAL, PROJ, and Rasterio relate at the engine level. Use as reference when things break. The GDAL section alone is worth the price.</div>
+      </div>
+    </div>
+    <div class="book-item">
+      <span class="book-tier" style="background:#1A3D1A; color:#76C442;">INT</span>
+      <div class="book-info">
+        <div class="book-title">Introduction to GIS Programming with Python<span class="book-free">FREE</span></div>
+        <div class="book-meta">Qiusheng Wu — gispro.gishub.org (2024–2025)</div>
+        <div class="book-note">Creator of geemap and leafmap — most active open-source contributor in Python GeoAI right now. Covers rioxarray, temporal analysis, Google Earth Engine at scale. Read during Phase 2.</div>
+      </div>
+    </div>
+    <div class="book-item">
+      <span class="book-tier" style="background:#1A3D1A; color:#76C442;">INT</span>
+      <div class="book-info">
+        <div class="book-title">Geographic Data Science with Python<span class="book-free">FREE</span></div>
+        <div class="book-meta">Rey, Arribas-Bel & Wolf — geographicdata.science (2023)</div>
+        <div class="book-note">Where the beginner books teach you to handle data, this one teaches you to think spatially. Spatial autocorrelation, clustering, Moran's I. Read during Phase 3.</div>
+      </div>
+    </div>
+    <div class="book-item">
+      <span class="book-tier" style="background:#1A3D1A; color:#76C442;">INT</span>
+      <div class="book-info">
+        <div class="book-title">Remote Sensing, Big Data, and GeoAI</div>
+        <div class="book-meta">Bunting, Southworth, Gibbes & Herrero — Elsevier (2024)</div>
+        <div class="book-note">Most direct match to your domain. Agriculture and ClimateTech case studies. 2024 date means AI integration sections reflect the current field. Read during Phase 2.</div>
+      </div>
+    </div>
+    <div class="book-item">
+      <span class="book-tier" style="background:#1A3D1A; color:#76C442;">INT</span>
+      <div class="book-info">
+        <div class="book-title">Handbook of Geospatial Artificial Intelligence</div>
+        <div class="book-meta">Song Gao, Yingjie Hu & Wenwen Li (eds.) — CRC Press (2023)</div>
+        <div class="book-note">First single-volume reference handbook on GeoAI as a unified field. Don't read cover-to-cover — use as a reference dictionary. Song Gao runs the Geospatial Data Science Lab at Wisconsin.</div>
+      </div>
+    </div>
+    <div class="book-item">
+      <span class="book-tier" style="background:#3D1A00; color:#E8A83E;">ADV</span>
+      <div class="book-info">
+        <div class="book-title">Deep Learning for the Earth Sciences</div>
+        <div class="book-meta">Camps-Valls, Tuia, Zhu & Reichstein — Wiley (2021)</div>
+        <div class="book-note">The scientific community's reference book for applying deep learning to remote sensing. Written by EPFL, TU Munich, Max-Planck researchers. Read in Phase 4 — only after your classical pipeline is solid.</div>
+      </div>
+    </div>
+    <div class="book-item">
+      <span class="book-tier" style="background:#3D1A00; color:#E8A83E;">ADV</span>
+      <div class="book-info">
+        <div class="book-title">GeoAI and Planetary Health</div>
+        <div class="book-meta">Abhijeet Sarkar — CRC Press (2024)</div>
+        <div class="book-note">Frames your work in climate, biodiversity, and food security terms. Read last, when preparing for job applications. This is what elevates a technical portfolio into a career narrative.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack" class="section">
+  <div class="sec-eyebrow">// Your technical foundation</div>
+  <h2 class="sec-title">The 2026-Ready Stack</h2>
+  <p class="sec-sub">Everything you need. Nothing you don't. Build on this, don't replace it.</p>
+
+  <div class="warn">The biggest stack mistake to avoid: adding tools before you've used the core ones. Master rasterio + rioxarray + pystac-client before touching anything else.</div>
+
+  <div class="stack-grid">
+    <div class="stack-block">
+      <div class="sb-label">Data Discovery</div>
+      <div class="sb-items">
+        <span class="sb-item">pystac-client</span>
+        <span class="sb-item">odc-stac</span>
+        <span class="sb-item">stackstac</span>
+        <span class="sb-item">Element84 STAC</span>
+        <span class="sb-item">CDSE STAC API</span>
+      </div>
+    </div>
+    <div class="stack-block">
+      <div class="sb-label">Raster Processing</div>
+      <div class="sb-items">
+        <span class="sb-item">rasterio</span>
+        <span class="sb-item">rioxarray</span>
+        <span class="sb-item">xarray</span>
+        <span class="sb-item">numpy</span>
+        <span class="sb-item">dask</span>
+      </div>
+    </div>
+    <div class="stack-block">
+      <div class="sb-label">Vector / GIS</div>
+      <div class="sb-items">
+        <span class="sb-item">geopandas</span>
+        <span class="sb-item">shapely</span>
+        <span class="sb-item">pyproj</span>
+        <span class="sb-item">pyogrio</span>
+        <span class="sb-item">fiona</span>
+      </div>
+    </div>
+    <div class="stack-block">
+      <div class="sb-label">Visualisation</div>
+      <div class="sb-items">
+        <span class="sb-item">matplotlib</span>
+        <span class="sb-item">leafmap</span>
+        <span class="sb-item">geemap</span>
+        <span class="sb-item">folium</span>
+        <span class="sb-item">plotly</span>
+      </div>
+    </div>
+    <div class="stack-block">
+      <div class="sb-label">Cloud Formats</div>
+      <div class="sb-items">
+        <span class="sb-item">COG (GeoTIFF)</span>
+        <span class="sb-item">GeoParquet</span>
+        <span class="sb-item">Zarr</span>
+        <span class="sb-item">NetCDF</span>
+        <span class="sb-item">DuckDB spatial</span>
+      </div>
+    </div>
+    <div class="stack-block">
+      <div class="sb-label">Data Sources</div>
+      <div class="sb-items">
+        <span class="sb-item">Sentinel-2 L2A</span>
+        <span class="sb-item">Sentinel-1 SAR</span>
+        <span class="sb-item">ERA5 / Open-Meteo</span>
+        <span class="sb-item">MODIS / VIIRS</span>
+        <span class="sb-item">GRACE (groundwater)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOBAL -->
+<section id="world" class="section">
+  <div class="sec-eyebrow">// Your global career map</div>
+  <h2 class="sec-title">The World Is Your Region</h2>
+  <p class="sec-sub">The problems you solve exist on every continent. These organisations will take you there — when you have the credibility to show them.</p>
+
+  <div class="org-grid">
+    <div class="org-card">
+      <div class="org-name">FAO — UN Food & Agriculture Organization</div>
+      <div class="org-desc">Already deploying GeoAI engineers for drought assessment in Vietnam, Kenya, Mauritania, Pakistan. Entry via short-term consultancy contracts. impactpool.org is your application platform.</div>
+      <div class="org-tags">
+        <span class="tag t-teal">Field deployment</span>
+        <span class="tag t-amber">3+ years</span>
+      </div>
+    </div>
+    <div class="org-card">
+      <div class="org-name">CGIAR Research Centres</div>
+      <div class="org-desc">CIMMYT, IRRI, IWMI, ICRISAT — world's most advanced agricultural GeoAI research. Field work across South Asia, Sub-Saharan Africa, Latin America. The best-kept secret in international technical careers.</div>
+      <div class="org-tags">
+        <span class="tag t-teal">Most technical</span>
+        <span class="tag t-amber">2–3 years</span>
+      </div>
+    </div>
+    <div class="org-card">
+      <div class="org-name">Planet Labs / Global Fishing Watch</div>
+      <div class="org-desc">Remote-first earth observation companies. No location requirement. Hire geospatial engineers globally. Serious technical work. Accessible at 18 months with a strong portfolio.</div>
+      <div class="org-tags">
+        <span class="tag t-teal">Fully remote</span>
+        <span class="tag t-teal">18 months</span>
+      </div>
+    </div>
+    <div class="org-card">
+      <div class="org-name">Copernicus Emergency Management</div>
+      <div class="org-desc">EU's operational satellite disaster response. Contracted through GAF AG, UNOSAT, Sertit. Rapid deployment globally for every major disaster. Entry via contractor roles.</div>
+      <div class="org-tags">
+        <span class="tag t-amber">Rapid deployment</span>
+        <span class="tag t-teal">EU-based</span>
+      </div>
+    </div>
+    <div class="org-card">
+      <div class="org-name">Deltares / HKV / HaskoningDHV</div>
+      <div class="org-desc">Netherlands-based world leaders in water engineering. Your water stress project speaks directly to their hiring needs. The strongest first EU landing for your profile.</div>
+      <div class="org-tags">
+        <span class="tag t-teal">Netherlands</span>
+        <span class="tag t-teal">Water anchor</span>
+      </div>
+    </div>
+    <div class="org-card">
+      <div class="org-name">World Bank / EBRD / EIB</div>
+      <div class="org-desc">Multilateral development banks funding climate adaptation globally. Highest pay in the sustainable GeoAI space. Require master's + 5 years. Your 5-year horizon target.</div>
+      <div class="org-tags">
+        <span class="tag t-dim">5-year horizon</span>
+        <span class="tag t-amber">Highest pay</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="sec-eyebrow" style="margin-top:0">// Your realistic journey stages</div>
+  <div class="insight" style="margin-top:0.5rem">
+    <strong>Stage 1 (Now–Month 18):</strong> Build. Don't travel. Don't get distracted. Execute the project plan. The dream is only achievable if this phase is done seriously.
+  </div>
+  <div class="insight">
+    <strong>Stage 2 (Month 12–24):</strong> First international role. Remote-first company or EU-based position. Solve your visa situation. Attend EGU Vienna, IGARSS — meet the CGIAR and FAO people who will remember you later.
+  </div>
+  <div class="insight">
+    <strong>Stage 3 (Year 2–4):</strong> First field deployment. A 3-month FAO or CGIAR consultancy. Vietnam, Kenya, Peru. Your first time using satellite data in the physical place the data describes. This changes how you think about everything permanently.
+  </div>
+  <div class="insight">
+    <strong>Stage 4 (Year 4–7):</strong> The life you described becomes real. Multiple continents. A network that trusts you. The ability to choose your next project. This is not fantasy — this is what the engineers who executed their plan actually do.
+  </div>
+</section>
+
+<!-- RULES -->
+<section id="rules" class="section">
+  <div class="sec-eyebrow">// Non-negotiable</div>
+  <h2 class="sec-title">The Rules</h2>
+  <p class="sec-sub">These are not suggestions. These are the principles that separate the people who make it from the ones who don't.</p>
+
+  <div class="rules-grid">
+    <div class="rule">
+      <div class="rule-num">01</div>
+      <div class="rule-body">
+        <div class="rule-title">Always know why the AI output is wrong</div>
+        <div class="rule-text">Every foundation model in GeoAI has known failure modes. Prithvi-EO-2.0 misclassifies irrigated fields. The engineer who can articulate these failures is irreplaceable. The engineer who trusts the output without understanding it is replaceable tomorrow.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">02</div>
+      <div class="rule-body">
+        <div class="rule-title">Build domain vocabulary as seriously as your stack</div>
+        <div class="rule-text">Know what "evapotranspiration stress" means to an agronomist. Know what "return period" means to an insurance actuary. Know what "MRV compliance" means to an EU regulator. That translation layer is your long-term job security — not the Python libraries.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">03</div>
+      <div class="rule-body">
+        <div class="rule-title">Use AI to accelerate, never to avoid understanding</div>
+        <div class="rule-text">Use Claude, Copilot, ChatGPT for boilerplate and debugging. Never to skip understanding what the code does. The moment you cannot explain your own pipeline without AI help, you have a gap that will show in an interview, a production failure, or a field deployment.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">04</div>
+      <div class="rule-body">
+        <div class="rule-title">Specificity signals real work</div>
+        <div class="rule-text">"I built a general geospatial pipeline" is forgettable. "I built a crop health monitor for the Po Valley wheat belt that reveals the phenological cycle in NDVI time-series" is a sentence people remember. Be specific about your region, your problem, and what you found. Specificity is the signal of genuine depth.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">05</div>
+      <div class="rule-body">
+        <div class="rule-title">Write publicly. Even a little.</div>
+        <div class="rule-text">One blog post on dev.to creates more networking conversations than six months of attending events. Engineers in this space read these. The people who will hire you for a FAO consultancy in three years will find you through your writing, not your LinkedIn profile.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">06</div>
+      <div class="rule-body">
+        <div class="rule-title">Document everything that breaks</div>
+        <div class="rule-text">Every error — write it down. "Step X failed because Y, fixed by Z." That document is your blog post in three weeks. The interesting stories — the ones that make people lean in — come from hitting real problems and solving them, not from clean demos.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">07</div>
+      <div class="rule-body">
+        <div class="rule-title">Read the Geospatial Jobs newsletter every week</div>
+        <div class="rule-text">geospatial.substack.com. Read every issue. It covers AgriTech, ClimateTech, risk modeling, energy, water, and remote sensing simultaneously. Pay attention to which companies are raising funding — they hire aggressively 3–6 months after a round. This is your market intelligence, not an optional extra.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">08</div>
+      <div class="rule-body">
+        <div class="rule-title">Physical-world grounding is your permanent moat</div>
+        <div class="rule-text">AI is brilliant at pattern recognition in data. It is bad at dealing with the physical world's refusal to behave like training data. The engineer who understands the physical system — not just its data representation — will always have something to contribute that the model alone cannot provide. Protect this understanding. It is irreplaceable.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOTIVATION -->
+<section id="motivation" class="section">
+  <div class="sec-eyebrow">// When you forget why</div>
+  <h2 class="sec-title">Read This When You're Lost</h2>
+  <p class="sec-sub">These are the truths to hold onto on the days when nothing is working and it doesn't feel like it's going anywhere.</p>
+
+  <div class="truth-list">
+    <div class="truth">
+      <strong>The middle is where everyone quits.</strong> The months where you are working seriously but nothing visible has changed yet — that is the most important period in any transformation. Most people mistake the absence of external validation for evidence that it isn't working. It is not. It is the cost of doing something real. Pay it.
+    </div>
+    <div class="truth">
+      <strong>You are not behind.</strong> You are 24, you have identified a meaningful direction, you have a clear plan, and you have started. Most people your age have none of these things. The frustration you feel is not evidence of failure — it is evidence that you care about the outcome. That is the rarest ingredient.
+    </div>
+    <div class="truth">
+      <strong>The visa clock is real — and it is manageable.</strong> Two years feels short. It is short. But 18 months of serious execution is enough to build a portfolio that opens global doors. Tight timelines have produced some of the best technical work in history. Use the pressure as fuel, not as a reason to panic or abandon the direction.
+    </div>
+    <div class="truth">
+      <strong>The pipeline you are building is already running in the field somewhere.</strong> Right now, FAO engineers are using these exact Sentinel-2 pipelines to assess drought in Vietnam. CGIAR researchers are running crop classifiers in Ethiopia. Copernicus analysts are producing flood maps in Pakistan. You are learning the language of people doing some of the most important technical work on Earth. That language takes time. Stay in the classroom.
+    </div>
+    <div class="truth">
+      <strong>The dream is not naive.</strong> Traveling the world and using satellite data to solve physical problems that matter — this is a career that exists and that people actually live. The path to it is exactly what your plan describes. You did not invent a fantasy. You found a real direction and made a real plan to reach it. That is all that is required. Now execute.
+    </div>
+    <div class="truth">
+      <strong>AI will not make this domain irrelevant.</strong> It will make the shallow parts of it irrelevant. The part you are building toward — understanding physical systems, designing pipelines that handle real-world messiness, translating satellite outputs into decisions that people will stake money and lives on — that part remains human work for longer than you will need it to. Build the depth. The depth is the protection.
+    </div>
+    <div class="truth">
+      <strong>One tile at a time.</strong> The 18-month plan looks enormous from the beginning. It is not. It is one Sentinel-2 tile, processed correctly, with understanding. Then another. Then a time series. Then a second sensor. Then a second question. Then a unified system. You do not need to see the whole staircase. You need to see the next step. What is the next step right now?
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<div id="closing">
+  <div class="closing-word">BUILD.</div>
+  <p class="closing-text">
+    Everything you need is already in place.<br>
+    The data is free. The tools are installed. The plan is written.<br><br>
+    <strong>The only thing that separates where you are from where you want to be is the work that happens between now and then.</strong><br><br>
+    Close this document. Open the notebook. Run the next cell.
+  </p>
+  <a href="#hero" class="back-top">↑ back to the top</a>
+</div>
+
+</main>
+
+<footer>
+  <span>// GeoAI Master Document — built June 2026</span>
+  <span>Your reference. Your reminder. Your fuel.</span>
+</footer>
+
+<script>
+  function togD(head) {
+    const body = head.nextElementSibling;
+    const chev = head.querySelector('.dc-chev');
+    body.classList.toggle('open');
+    chev.classList.toggle('open');
+  }
+
+  function togP(el) {
+    const detail = el.querySelector('.ph-detail');
+    if (detail) detail.classList.toggle('open');
+  }
+
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('section[id], #hero');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === '#' + id
+            ? 'var(--text)' : '';
+          link.style.borderBottomColor = link.getAttribute('href') === '#' + id
+            ? 'var(--teal)' : '';
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
